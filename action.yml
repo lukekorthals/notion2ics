@@ -66,7 +66,7 @@ runs:
     # Step 7: Commit and push changes
     - name: Commit and push changes
       run: |
-        git add .
+        git add ${{ inputs.ics-path }}
         git commit -m "notion2ics" || echo "No changes to commit"
         git push
       shell: bash
