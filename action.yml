@@ -1,6 +1,8 @@
 name: "notion2ics"
 description: "Create an .ics calendar file from Notion databases"
-icon: "calendar"
+branding:
+  icon: "calendar"
+  color: "black"
 
 inputs:
   github_token: 
