@@ -73,6 +73,7 @@ Tipps for creating your settings json:
 - The notion_calendar_settings.json file specifies all databases and date properties you want to use for creating events.
 - You can add multiple data_properties if a single page in your database has multiple date properties.
 - You can use date properties and notion formula properties that evaluate as dates.
+- If a date property only has a start date, or if the start and end date are the same, a whole day event is created.
 - You can dynamically create the event name and description by specifying notion properties inside <>.
 
 ### Workflow
