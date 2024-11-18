@@ -1,0 +1,63 @@
+name: "notion2ics"
+description: "Update an ICS calendar file from Notion databases"
+
+inputs:
+  github_token: 
+    description: "Github token for committing and pushing. Defaults to the 'GITHUB_TOKEN' secret."
+    required: true
+    default: ${{ secrets.GITHUB_TOKEN }}
+  notion-token:
+    description: "Notion API token. Defaults to the 'NOTION_TOKEN' secret."
+    required: true
+    default: ${{ secrets.NOTION_TOKEN }}
+  settings-path:
+    description: "Path to a JSON file determining the settings for events created from Notion databases. Defaults to 'notion_calendar_settings.json'"
+    required: true
+    default: "notion_calendar_settings.json"
+  ics-path:
+    description: "Output path for the ICS calendar file. Defaults to 'notion_calendar.ics'"
+    required: true
+    default: "notion_calendar.ics"
+
+
+runs-on: ubuntu-latest
+  steps:
+    # Step 1: Check out the repository
+    - name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ inputs.github_token }}
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then
+          pip install -r requirements.txt
+        fi
+
+    # Step 4: Create ICS calendar file
+    - name: Create .ics from Notion databases
+      env:
+        NOTION_TOKEN: ${{ inputs.notion-token }}
+        SETTINGS_PATH: ${{ inputs.settings-path }}
+        ICS_PATH: ${{ inputs.ics-path }}
+      run: python update_notion_calendar.py
+
+    # Step 5: Configure Git
+    - name: Configure Git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    # Step 6: Commit and push changes
+    - name: Commit and push changes
+      run: |
+        git add .
+        git commit -m "notion2ics" || echo "No changes to commit"
+        git push
