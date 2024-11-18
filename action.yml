@@ -1,5 +1,5 @@
 name: "notion2ics"
-description: "Update an ICS calendar file from Notion databases"
+description: "Create an .ics calendar file from Notion databases"
 
 inputs:
   github_token: 
