@@ -20,7 +20,8 @@ inputs:
     default: "notion_calendar.ics"
 
 
-runs-on: ubuntu-latest
+runs:
+  using: 'composite'
   steps:
     # Step 1: Check out the repository
     - name: Check out repository
