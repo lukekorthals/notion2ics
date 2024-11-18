@@ -42,6 +42,7 @@ runs:
         if [ -f requirements.txt ]; then
           pip install -r requirements.txt
         fi
+      shell: bash
 
     # Step 4: Create ICS calendar file
     - name: Create .ics from Notion databases
@@ -50,12 +51,14 @@ runs:
         SETTINGS_PATH: ${{ inputs.settings-path }}
         ICS_PATH: ${{ inputs.ics-path }}
       run: python update_notion_calendar.py
+      shell: bash
 
     # Step 5: Configure Git
     - name: Configure Git
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      shell: bash
 
     # Step 6: Commit and push changes
     - name: Commit and push changes
@@ -63,3 +66,4 @@ runs:
         git add .
         git commit -m "notion2ics" || echo "No changes to commit"
         git push
+      shell: bash
