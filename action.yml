@@ -8,11 +8,9 @@ inputs:
   github_token: 
     description: "Github token for committing and pushing. Defaults to the 'GITHUB_TOKEN' secret."
     required: true
-    default: ${{ secrets.ACCESS_TOKEN }}
   notion-token:
     description: "Notion API token. Defaults to the 'NOTION_TOKEN' secret."
     required: true
-    default: ${{ secrets.NOTION_TOKEN }}
   settings-path:
     description: "Path to a JSON file determining the settings for events created from Notion databases. Defaults to 'notion_calendar_settings.json'"
     required: true
