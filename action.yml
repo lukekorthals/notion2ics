@@ -20,44 +20,49 @@ inputs:
     required: true
     default: "notion_calendar.ics"
 
-
 runs:
   using: 'composite'
   steps:
-    # Step 1: Check out the repository
-    - name: Check out repository
+    # Step 1: Check out the user repository
+    - name: Check out user repository
       uses: actions/checkout@v4
       with:
         token: ${{ inputs.github-token }}
 
-    # Step 2: Set up Python
+    # Step 2: Copy action files to the current workspace
+    - name: Copy action files
+      run: |
+        cp $GITHUB_ACTION_PATH/notion2ics.py ./notion2ics.py
+        cp $GITHUB_ACTION_PATH/requirements.txt ./requirements.txt
+
+    # Step 3: Set up Python
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
-    # Step 3: Install dependencies
+    # Step 4: Install dependencies
     - name: Install dependencies
       run: pip install -r requirements.txt
       shell: bash
 
-    # Step 4: Create ICS calendar file
+    # Step 5: Create ICS calendar file
     - name: Create .ics from Notion databases
       env:
         NOTION_TOKEN: ${{ inputs.notion-token }}
         SETTINGS_PATH: ${{ inputs.settings-path }}
         ICS_PATH: ${{ inputs.ics-path }}
-      run: python update_notion_calendar.py
+      run: python notion2ics.py
       shell: bash
 
-    # Step 5: Configure Git
+    # Step 6: Configure Git
     - name: Configure Git
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
       shell: bash
 
-    # Step 6: Commit and push changes
+    # Step 7: Commit and push changes
     - name: Commit and push changes
       run: |
         git add .
