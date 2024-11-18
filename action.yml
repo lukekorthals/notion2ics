@@ -5,7 +5,7 @@ branding:
   color: "black"
 
 inputs:
-  github_token: 
+  github-token: 
     description: "Github token for committing and pushing. Defaults to the 'GITHUB_TOKEN' secret."
     required: true
   notion-token:
