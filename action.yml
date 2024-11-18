@@ -38,8 +38,7 @@ runs:
 
     # Step 3: Install dependencies
     - name: Install dependencies
-      run: |
-        pip install -r .github/actions/requirements.txt
+      run: pip install -r requirements.txt
       shell: bash
 
     # Step 4: Create ICS calendar file
